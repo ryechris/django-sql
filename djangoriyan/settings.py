@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tlxtj@jjut(wooo9mlhda5th43eq1ecg8c521+%%p=#y6v(^w5'
+
+SECRET_KEY = environ.["SECRET_KEY"] 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'RENDER' not in environ
 
 ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = environ['RENDER_EXTERNAL_HOSTNAME']
+if RENDER_EXTERNAL_HOSTNAME:
+  ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
