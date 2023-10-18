@@ -1,0 +1,20 @@
+databases:
+  - name: djangoriyan
+    databaseName: djangoriyan
+    user: djangoriyan
+
+services:
+  - type: web
+    name: djangoriyan
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn djangoriyan.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: djangoriyan
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
